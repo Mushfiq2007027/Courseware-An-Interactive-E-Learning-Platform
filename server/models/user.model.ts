@@ -1,7 +1,7 @@
-require('dotenv').config();
+require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const emailRegexPattern: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -40,7 +40,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
 		},
 		password: {
 			type: String,
-			required: [true, "Please enter your password"],
+			//required: [true, "Please enter your password"],
 			minlength: [6, "Password must be at least 6 characters"],
 			select: false,
 		},
@@ -76,12 +76,16 @@ userSchema.pre<IUser>("save", async function (next) {
 
 // sign access token
 userSchema.methods.SignAccessToken = function () {
-  return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN || '');
+	return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN || "", {
+		expiresIn: "5m",
+	});
 };
 
 // sign refresh token
 userSchema.methods.SignRefreshToken = function () {
-	return jwt.sign({ id: this._id }, process.env.REFRESH_TOKEN || '');
+	return jwt.sign({ id: this._id }, process.env.REFRESH_TOKEN || "", {
+		expiresIn: "3d",
+	});
 };
 
 // compare password

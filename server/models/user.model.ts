@@ -40,7 +40,6 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
 		},
 		password: {
 			type: String,
-			//required: [true, "Please enter your password"],
 			minlength: [6, "Password must be at least 6 characters"],
 			select: false,
 		},
@@ -98,3 +97,5 @@ userSchema.methods.comparePassword = async function (
 const userModel: Model<IUser> = mongoose.model("User", userSchema);
 
 export default userModel;
+
+

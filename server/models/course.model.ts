@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { IUser } from "./user.model";
-//import { IUser } from "./user.model";
+
 
 interface IComment extends Document {
 	user: IUser;
@@ -60,8 +60,8 @@ const reviewSchema = new Schema<IReview>(
 		},
 		comment: String,
 		commentReplies: [Object],
-	} //,
-	//{ timestamps: true }
+	} ,
+	{ timestamps: true }
 );
 
 const linkSchema = new Schema<ILink>({
@@ -144,7 +144,7 @@ const courseSchema = new Schema<ICourse>(
 			default: 0,
 		},
 	},
-	//{ timestamps: true }
+	{ timestamps: true }
 );
 
 const CourseModel: Model<ICourse> = mongoose.model("Course", courseSchema);
